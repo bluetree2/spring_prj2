@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/main::commonHead('소개')}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{layout/main::pageNavbar('introduce')}"></nav>
+
+<!--<section class="section1">Welcome2</section>-->
+
+
+<section class="section1">
+    <p>
+    to do list 소개
+    <br>
+    todo list란?</p>
+
+</section>
+<section class="section2">
+<!--    이미지는 웬만해선 절대경로-->
+<!--    <img src="https://placehold.co/1200x800" class="moving-image" id="movingImage" />-->
+<!--    <img src="C://webimg/calendar/1.png" class="moving-image" id="movingImage" />-->
+    <img th:src="@{'/img/calendar/'+${month}+'.png'}" class="moving-image" id="movingImage" />
+</section>
+
+<section class="section3">Thank You</section>
+
+<script>
+    const movingImage = document.getElementById('movingImage');
+
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        // 이미지가 부드럽게 위로 이동하는 효과
+        // console.log(scrollY);
+        if (scrollY >= 1500){
+            movingImage.style.transform = `translate(-50%, -50%) translateY(${(scrollY * 1)-3250}px)`;
+        }else{
+            movingImage.style.transform = `translate(-50%, -50%) translateY(${(scrollY * 0.5)-2500}px)`;
+        }
+    });
+</script>
+
+
+<th:block th:replace="~{layout/main::commonScript}"/>
+</body>
+</html>
