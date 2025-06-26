@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/main::commonHead('작성')}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{layout/main::pageNavbar(write)}"></nav>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col col-lg-6">
+
+
+            <h2>todolist 작성</h2>
+
+            <form th:action="@{/board/write}" method="post">
+                <div class="mb-3">
+                    <label class="form-label" for="titleInput">제목</label>
+                    <input class="form-control" type="text" id="titleInput" name="title">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="contextTextarea">본문</label>
+                    <textarea class="form-control" rows="10" id="contextTextarea" name="content"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="writerInput">작성자</label>
+                    <input class="form-control" type="text" id="writerInput" readonly
+                           th:value="${session.loggedInUser.name}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="startDtInput">시작일</label>
+                    <input class="form-control" type="datetime-local" id="startDtInput"
+                           th:value="${}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="finishDtInput">종료일ㄴ</label>
+                    <input class="form-control" type="datetime-local" id="finishDtInput"
+                           th:value="${}">
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-primary">저장</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{layout/main::commonScript}"/>
+</body>
+</html>

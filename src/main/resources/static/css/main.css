@@ -20,20 +20,19 @@ section {
 }
 
 .section2 {
+    height: 5000px;
     background-color: #2196F3;
     position: relative;
     overflow: hidden;
 }
 
 .moving-image {
-    width: 300px;
+    width: 800px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) translateY(0px);
-    transition: transform 0.1s linear;
+    /*transition: transform 0.1s linear;*/
 }
-
-.section3 {
-    background-color: #FF5722;
-}
+.section3 {background-color: #FF5722;}
+#movingImage {will-change: transform;}

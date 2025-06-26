@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/main::commonHead('회원가입')}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{layout/main::pageNavbar('signup')}"></nav>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col col-lg-6">
+        <h2 class="mb-3">회원가입</h2>
+        <form th:action="@{/member/signup}" method="post" class="mb-3">
+            <div class="md-3">
+                <label class="form-label" for="inputId">아이디</label>
+                <input th:value="${member == null ? '' : member.id }" class="form-control"
+                       id="inputId" type="text" name="id"></div>
+            <div class="md-3">
+                <label class="form-label" for="inputPassword">암호</label>
+                <input th:value="${member == null ? '' : member.password }" class="form-control"
+                       id="inputPassword" type="password" name="password"></div>
+            <div class="md-3">
+                <label class="form-label" for="inputName">별명</label>
+                <input th:value="${member == null ? '' : member.name }" class="form-control"
+                       id="inputName" type="text" name="name"></div>
+            <div class="md-3">
+                <label class="form-label" for="textareaInfo">자기소개</label>
+                <textarea th:value="${member == null ? '' : member.info }" class="form-control"
+                          id="textareaInfo" rows="3" name="info"></textarea>
+            </div>
+            <div class="md-3">
+                <button class="btn btn-primary">가입</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{layout/main::commonScript}"/>
+</body>
+</html>

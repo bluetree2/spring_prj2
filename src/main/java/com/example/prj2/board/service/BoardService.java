@@ -1,0 +1,54 @@
+package com.example.prj2.board.service;
+
+import com.example.prj2.board.dto.BoardListInfo;
+import com.example.prj2.board.Repository.BoardRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class BoardService {
+
+    private final BoardRepository boardRepository;
+//    private final MemberRepository memberRepository;
+
+    public Map<String,Object> list(Integer page, String keyword) {
+//        List<Board> list = boardRepository.findAll();
+
+        Page<BoardListInfo> boardPage = null;
+
+        if (keyword == null || keyword.isBlank()) {
+            boardPage = boardRepository
+                    .findAllBy(PageRequest.of(page -1, 10,
+                            Sort.by("id").descending()));
+        }else{
+            boardPage = boardRepository
+                    .searchByKeyword("%"+keyword+"%",
+                            PageRequest.of(page - 1,10,
+                                    Sort.by("id").descending()));
+        }
+        List<BoardListInfo> boardList = boardPage.getContent();
+
+        Integer rightPageNumber = ((page - 1) / 10 + 1) * 10;
+        Integer leftPageNumber = rightPageNumber - 9;
+        rightPageNumber = Math.min(rightPageNumber, boardPage.getTotalPages());
+
+        var result = Map.of("boardList", boardList,
+                "totalElements", boardPage.getTotalElements(),
+                "totalPages",boardPage.getTotalPages(),
+                "rightPageNumber", rightPageNumber,
+                "leftPageNumber", leftPageNumber,
+                "currentPage",page
+        );
+        return result ;
+    }
+
+}

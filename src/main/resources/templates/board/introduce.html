@@ -28,17 +28,40 @@
 
 <script>
     const movingImage = document.getElementById('movingImage');
-
+    let ticking = false;
+    let targetY = 0;
+    let currentY = 0;
     window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        // 이미지가 부드럽게 위로 이동하는 효과
-        // console.log(scrollY);
-        if (scrollY >= 1500){
-            movingImage.style.transform = `translate(-50%, -50%) translateY(${(scrollY * 1)-3250}px)`;
-        }else{
-            movingImage.style.transform = `translate(-50%, -50%) translateY(${(scrollY * 0.5)-2500}px)`;
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                handleScroll();
+                ticking = false;
+            });
+            ticking = true;
         }
     });
+    // animate()
+
+    function handleScroll() {
+        const scrollY = window.scrollY;
+        let translateY;
+        // console.log(scrollY);
+        if (scrollY >= 1500) {
+            // 부드럽게 이어지는 식
+            translateY = (1500 * 0.5 - 2500) + ((scrollY - 1500) * 1);
+        } else {
+            translateY = (scrollY * 0.5) - 2500;
+        }
+
+        // 이미지가 부드럽게 위로 이동하는 효과
+        movingImage.style.transform = `translate(-50%, -50%) translateY(${translateY}px)`;
+    }
+
+    function animate() {
+        currentY += (targetY - currentY) * 0.1; // 부드럽게 따라가기 (0.1은 속도 계수)
+        movingImage.style.transform = `translate(-50%, -50%) translateY(${currentY}px)`;
+        requestAnimationFrame(animate);
+    }
 </script>
 
 

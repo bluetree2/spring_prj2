@@ -17,8 +17,8 @@ CREATE TABLE todolist
     todo_title   VARCHAR(255)  NOT NULL,
     todo_content VARCHAR(8000) NULL,
     started_dt   datetime      NOT NULL DEFAULT (NOW() + INTERVAL 1 HOUR),
-    fnished_dt   datetime      NOT NULL DEFAULT (NOW() + INTERVAL 2 HOUR),
-    conpleted    boolean       NOT NULL DEFAULT false,
+    finished_dt  datetime      NOT NULL DEFAULT (NOW() + INTERVAL 2 HOUR),
+    completed    boolean       NOT NULL DEFAULT false,
     created_dt   datetime      NOT NULL DEFAULT NOW(),
     updated_dt   datetime      NOT NULL DEFAULT NOW(),
     CONSTRAINT pk_todolist PRIMARY KEY (id)
