@@ -31,12 +31,12 @@
                 <div class="mb-3">
                     <label class="form-label" for="startDtInput">시작일</label>
                     <input class="form-control" type="datetime-local" id="startDtInput"
-                           th:value="${}">
+                           step="120">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="finishDtInput">종료일ㄴ</label>
+                    <label class="form-label" for="finishDtInput">종료일</label>
                     <input class="form-control" type="datetime-local" id="finishDtInput"
-                           th:value="${}">
+                           step="120">
                 </div>
                 <div class="mb-3">
                     <button class="btn btn-primary">저장</button>
@@ -47,5 +47,20 @@
     </div>
 </div>
 <th:block th:replace="~{layout/main::commonScript}"/>
+<script>
+    var d = new Date();
+
+    document.getElementById("startDtInput").value = new Date(
+        d.getTime() - d.getTimezoneOffset() * 60000
+    )
+        .toISOString()
+        .slice(0, -8);
+    // document.getElementById('startDtInput').value= new Date().toISOString()
+    document.getElementById('finishDtInput')
+        .value = new Date(new Date()
+        .getTime() - d.getTimezoneOffset() * 60000 + (60 * 60 * 1000))
+        .toISOString().slice(0, -8);
+
+</script>
 </body>
 </html>

@@ -2,6 +2,8 @@ package com.example.prj2.board.service;
 
 import com.example.prj2.board.dto.BoardListInfo;
 import com.example.prj2.board.Repository.BoardRepository;
+import com.example.prj2.board.dto.TodoFrom;
+import com.example.prj2.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -51,4 +53,6 @@ public class BoardService {
         return result ;
     }
 
+    public void add(TodoFrom data, MemberDto user) {
+    }
 }

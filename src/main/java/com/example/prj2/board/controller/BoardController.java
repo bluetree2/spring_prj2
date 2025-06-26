@@ -1,18 +1,20 @@
 package com.example.prj2.board.controller;
 
+import com.example.prj2.board.dto.TodoFrom;
 import com.example.prj2.board.service.BoardService;
+import com.example.prj2.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Map;
+
 
 
 @Controller
@@ -47,12 +49,30 @@ public class BoardController {
 
     @GetMapping("write")
     public String write(Model model) {
-//        model.addAttribute("standardDate", new Date());
-//        model.addAttribute("localDateTime", LocalDateTime.now());
-//        model.addAttribute("localDate", LocalDate.now());
-
+        model.addAttribute("standardDate", new Date());
+        model.addAttribute("localDateTime", LocalDateTime.now());
+        model.addAttribute("localDate", LocalDate.now());
 
         return "board/write";
+    }
+
+    @PostMapping("write")
+    public String writePost(TodoFrom data,
+                            @SessionAttribute(name = "loggedInUser", required = false)
+                            MemberDto user,
+                            RedirectAttributes rttr) {
+//        Object user = session.getAttribute("loggenInUser");
+
+        if (user != null) {
+//            MemberDto dto = (MemberDto) user;
+            boardService.add(data,user);
+            rttr.addFlashAttribute("alert", Map.of("code","primary","message","새 게시물이 등록되었습니다"));
+
+            return "redirect:/board/list";
+        }else{
+
+            return "redirect:/member/login";
+        }
     }
 
     @GetMapping("calendar")
