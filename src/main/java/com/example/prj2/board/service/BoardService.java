@@ -76,18 +76,27 @@ public class BoardService {
     public TodolistDto get(Integer id) {
         Todolist todo = boardRepository.findById(id).get();
         TodolistDto dto = new TodolistDto();
-        dto.setId(board.getId());
-        dto.setTo(board.getTitle());
-        dto.setContent(board.getContent());
+        dto.setId(todo.getId());
+        dto.setTodoTitle(todo.getTodoTitle());
+        dto.setTodoContent(todo.getTodoContent());
+        dto.setStartedDt(todo.getStartedDt());
+        dto.setFinishedDt(todo.getFinishedDt());
+        dto.setCompleted(todo.getCompleted());
 
         MemberDto memberDto = new MemberDto();
-        memberDto.setId(board.getWriter().getId());
-        memberDto.setNickName(board.getWriter().getNickName());
+//        memberDto.setId( .getWriter().getId());
+//        memberDto.setName( .getWriter().getNickName());
+        memberDto.setId(todo.getMember().getId());
+        memberDto.setName(todo.getMember().getName());
 
-        dto.setWriter(memberDto);
-//        dto.setWriter(board.getWriter());
-        dto.setCreatedAt(board.getCreatedAt());
 
+
+        dto.setMember(memberDto);
+//        dto.setMember(.getMember());
+        dto.setCreatedDt(todo.getCreatedDt());
+        System.out.println("todo = " + todo);
+        System.out.println("todo.getCreatedDt() = " + todo.getCreatedDt());
+        System.out.println("dto = " + dto);
         return dto;
     }
 }

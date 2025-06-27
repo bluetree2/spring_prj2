@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class TodoFrom {
-    String id;
+    Integer id;
     MemberDto member;
     String todoTitle;
     String todoContent;

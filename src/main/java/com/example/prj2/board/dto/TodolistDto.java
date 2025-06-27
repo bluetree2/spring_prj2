@@ -1,5 +1,6 @@
 package com.example.prj2.board.dto;
 
+import com.example.prj2.member.dto.MemberDto;
 import lombok.Data;
 import lombok.Value;
 
@@ -19,4 +20,7 @@ public class TodolistDto implements Serializable {
     Boolean completed;
     LocalDateTime createdDt;
     LocalDateTime updatedDt;
+    String username;
+    MemberDto Member;
+
 }

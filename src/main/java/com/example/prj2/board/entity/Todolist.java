@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 public class Todolist {
     @Id
     @Column(name = "id", nullable = false, length = 26)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @MapsId

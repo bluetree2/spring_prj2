@@ -19,24 +19,35 @@
             </h2>
             <div class="mb-3">
                 <label class="form-label" for="inputTitle">제목</label>
-                <input class="form-control" type="text" id="inputTitle" th:value="${board.title}">
+                <input class="form-control" type="text" id="inputTitle" th:value="${board.todoTitle}">
             </div>
             <div class="mb-3">
                 <label class="form-label" for="textareaContent">본문</label>
                 <textarea class="form-control" type="text"
                           id="textareaContent"
                           rows="10"
-                          th:text="${board.content}"></textarea>
+                          th:text="${board.todoContent}"></textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="inputWriter">작성자</label>
-                <input class="form-control" type="text" id="inputWriter" th:value="${board.writer.nickName}">
+                <input class="form-control" type="text" id="inputWriter" th:value="${board.member.name}">
             </div>
             <div class="mb-3">
-                <label class="form-label" for="inputCreated">작성일시</label>
-                <input class="form-control" type="text" id="inputCreated" th:value="${board.createdAt}">
+                <label class="form-label" for="inputCreated">시작일</label>
+                <input class="form-control" type="datetime-local" id="inputCreated"
+                       th:value="${board.startedDt}" readonly>
             </div>
-            <div th:if="${(session.loggedInUser != null) && (session.loggedInUser.id == board.writer.id)}"  >
+            <div class="mb-3">
+                <label class="form-label" for="inputFinished">종료일</label>
+                <input class="form-control" type="datetime-local" id="inputFinished"
+                       th:value="${board.finishedDt}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="inputComplited">종료일</label>
+                <input class="form-check-input" type="checkbox" id="inputComplited"
+                       th:value="${board.completed}" disabled>
+            </div>
+            <div th:if="${(session.loggedInUser != null) && (session.loggedInUser.id == board.member.id)}"  >
                 <button class="btn btn-outline-danger"
                         data-bs-toggle="modal"
                         data-bs-target="#removeModal"
