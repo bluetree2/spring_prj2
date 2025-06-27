@@ -3,7 +3,10 @@ package com.example.prj2.board.service;
 import com.example.prj2.board.dto.BoardListInfo;
 import com.example.prj2.board.Repository.BoardRepository;
 import com.example.prj2.board.dto.TodoFrom;
+import com.example.prj2.board.entity.Todolist;
 import com.example.prj2.member.dto.MemberDto;
+import com.example.prj2.member.entity.Member;
+import com.example.prj2.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +23,7 @@ import java.util.Map;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-//    private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     public Map<String,Object> list(Integer page, String keyword) {
 //        List<Board> list = boardRepository.findAll();
@@ -54,5 +57,19 @@ public class BoardService {
     }
 
     public void add(TodoFrom data, MemberDto user) {
+        Todolist
+        Todolist todolist = new Todolist();
+        todolist.setTodoTitle(data.getTodoTitle());
+        todolist.setTodoContent(data.getTodoContent());
+        todolist.setStartedDt(data.getStartedDt());
+        todolist.setFinishedDt(data.getFinishedDt());
+        if (data.getCompleted() == null) todolist.setCompleted(false);
+        else todolist.setCompleted(data.getCompleted());
+
+        Member member = memberRepository.findById(user.getId()).get();
+        todolist.setMember(member);
+        todolist.setUsername(member.getName());
+
+        boardRepository.save(todolist);
     }
 }

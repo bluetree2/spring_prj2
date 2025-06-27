@@ -43,6 +43,7 @@ public class BoardController {
         var result = boardService.list(page,keyword);
 
         model.addAllAttributes(result);
+        System.out.println("result = " + result);
 
         return "board/list";
     }
@@ -61,12 +62,11 @@ public class BoardController {
                             @SessionAttribute(name = "loggedInUser", required = false)
                             MemberDto user,
                             RedirectAttributes rttr) {
-//        Object user = session.getAttribute("loggenInUser");
 
         if (user != null) {
-//            MemberDto dto = (MemberDto) user;
             boardService.add(data,user);
-            rttr.addFlashAttribute("alert", Map.of("code","primary","message","새 게시물이 등록되었습니다"));
+            rttr.addFlashAttribute("alert",
+                    Map.of("code","primary","message","새 게시물이 등록되었습니다"));
 
             return "redirect:/board/list";
         }else{

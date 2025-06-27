@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/main::commonHead('작성')}">
     <meta charset="UTF-8">
     <title>Title</title>
@@ -17,25 +17,30 @@
             <form th:action="@{/board/write}" method="post">
                 <div class="mb-3">
                     <label class="form-label" for="titleInput">제목</label>
-                    <input class="form-control" type="text" id="titleInput" name="title">
+                    <input class="form-control" type="text" id="titleInput" name="todoTitle">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="contextTextarea">본문</label>
-                    <textarea class="form-control" rows="10" id="contextTextarea" name="content"></textarea>
+                    <label class="form-label" for="contextTextarea">내용</label>
+                    <textarea class="form-control" rows="10" id="contextTextarea" name="todoContent"></textarea>
                 </div>
+<!--                <div class="mb-3">-->
+<!--                    <label class="form-label" for="writerInput">작성자</label>-->
+<!--                    <input class="form-control" type="hidden" id="writerInput" readonly-->
+<!--                           th:value="${session.loggedInUser.name}">-->
+<!--                </div>-->
                 <div class="mb-3">
-                    <label class="form-label" for="writerInput">작성자</label>
-                    <input class="form-control" type="text" id="writerInput" readonly
-                           th:value="${session.loggedInUser.name}">
+                    <label class="form-label" for="completedInput">완료</label>
+                    <input class="form-check-input" type="checkbox" id="completedInput" name="completed"
+                           step="120">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="startDtInput">시작일</label>
-                    <input class="form-control" type="datetime-local" id="startDtInput"
+                    <input class="form-control" type="datetime-local" id="startDtInput" name="startedDt"
                            step="120">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="finishDtInput">종료일</label>
-                    <input class="form-control" type="datetime-local" id="finishDtInput"
+                    <input class="form-control" type="datetime-local" id="finishDtInput" name="finishedDt"
                            step="120">
                 </div>
                 <div class="mb-3">
@@ -50,16 +55,33 @@
 <script>
     var d = new Date();
 
+    /*
     document.getElementById("startDtInput").value = new Date(
-        d.getTime() - d.getTimezoneOffset() * 60000
-    )
+        d.getTime() - d.getTimezoneOffset() * 60000 + (60 * 60 * 1000))
         .toISOString()
-        .slice(0, -8);
+        .slice(0, 16);
     // document.getElementById('startDtInput').value= new Date().toISOString()
     document.getElementById('finishDtInput')
         .value = new Date(new Date()
-        .getTime() - d.getTimezoneOffset() * 60000 + (60 * 60 * 1000))
-        .toISOString().slice(0, -8);
+        .getTime() - d.getTimezoneOffset() * 60000 + (60 * 60 * 2000))
+        .toISOString().slice(0, 16);
+        */
+    setTimeout(() => {
+    const now = new Date();
+    const dt1 = new Date(now.getTime() + (60 * 60 * 1000));
+    const dt2 = new Date(now.getTime() + (60 * 60 * 2000));
+    const startInput = document.getElementById("startDtInput");
+    const finishDtInput = document.getElementById("finishDtInput");
+    startInput.value = toDatetimeLocalString(dt1);
+    finishDtInput.value = toDatetimeLocalString(dt2);
+    startInput.dispatchEvent(new Event('input', { bubbles: true }));
+    finishDtInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }, 0);
+    // console.log(toDatetimeLocalString(dt1));
+
+    function toDatetimeLocalString(date) {
+        return date.toLocaleString('sv-SE').replace(' ', 'T').slice(0, 16);
+    }
 
 </script>
 </body>

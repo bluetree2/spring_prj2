@@ -28,3 +28,7 @@ CREATE TABLE todolist
 Alter TABLE todolist
     ADD FOREIGN KEY (id) REFERENCES member (id);
 
+Alter TABLE todolist
+    ADD FOREIGN KEY (username) REFERENCES member (id);
+# ALTER TABLE board
+#     MODIFY writer VARCHAR(100) NOT NULL;
