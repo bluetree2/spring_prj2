@@ -3,6 +3,7 @@ package com.example.prj2.board.service;
 import com.example.prj2.board.dto.BoardListInfo;
 import com.example.prj2.board.Repository.BoardRepository;
 import com.example.prj2.board.dto.TodoFrom;
+import com.example.prj2.board.dto.TodolistDto;
 import com.example.prj2.board.entity.Todolist;
 import com.example.prj2.member.dto.MemberDto;
 import com.example.prj2.member.entity.Member;
@@ -46,7 +47,7 @@ public class BoardService {
         Integer leftPageNumber = rightPageNumber - 9;
         rightPageNumber = Math.min(rightPageNumber, boardPage.getTotalPages());
 
-        var result = Map.of("boardList", boardList,
+        var result = Map.of("todoList", boardList,
                 "totalElements", boardPage.getTotalElements(),
                 "totalPages",boardPage.getTotalPages(),
                 "rightPageNumber", rightPageNumber,
@@ -70,5 +71,23 @@ public class BoardService {
         todolist.setUsername(member.getName());
 
         boardRepository.save(todolist);
+    }
+
+    public TodolistDto get(Integer id) {
+        Todolist todo = boardRepository.findById(id).get();
+        TodolistDto dto = new TodolistDto();
+        dto.setId(board.getId());
+        dto.setTo(board.getTitle());
+        dto.setContent(board.getContent());
+
+        MemberDto memberDto = new MemberDto();
+        memberDto.setId(board.getWriter().getId());
+        memberDto.setNickName(board.getWriter().getNickName());
+
+        dto.setWriter(memberDto);
+//        dto.setWriter(board.getWriter());
+        dto.setCreatedAt(board.getCreatedAt());
+
+        return dto;
     }
 }

@@ -44,7 +44,6 @@ public class BoardController {
 
         model.addAllAttributes(result);
         System.out.println("result = " + result);
-
         return "board/list";
     }
 
@@ -80,6 +79,19 @@ public class BoardController {
 
         return "board/calendar";
     }
+
+    @GetMapping("view")
+    public String view(Integer id, Model model) {
+        // service
+        var dto = boardService.get(id);
+
+        // model
+        model.addAttribute("board",dto);
+
+        // view로 forward
+        return "board/view";
+    }
+
 
 
 }

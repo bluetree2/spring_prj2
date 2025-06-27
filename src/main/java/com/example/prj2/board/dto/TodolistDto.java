@@ -1,5 +1,6 @@
 package com.example.prj2.board.dto;
 
+import lombok.Data;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -8,9 +9,9 @@ import java.time.LocalDateTime;
 /**
  * DTO for {@link com.example.prj2.board.entity.Todolist}
  */
-@Value
+@Data
 public class TodolistDto implements Serializable {
-    String id;
+    Integer id;
     String todoTitle;
     String todoContent;
     LocalDateTime startedDt;

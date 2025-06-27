@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Todolist {
     @Id
     @Column(name = "id", nullable = false, length = 26)
-    private String id;
+    private Integer id;
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)

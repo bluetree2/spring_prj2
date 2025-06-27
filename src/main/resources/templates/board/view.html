@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/main::commonHead(|${board.id}번 게시물|)}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{layout/main::pageNavbar(_)}"></nav>
+<!--.container>.row.justify-content-center>.col.col-lg-6-->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col col-lg-6">
+
+
+            <h2 class="mb-3">
+                <span th:text="${board.id}"></span>
+                번
+                게시물 보기
+            </h2>
+            <div class="mb-3">
+                <label class="form-label" for="inputTitle">제목</label>
+                <input class="form-control" type="text" id="inputTitle" th:value="${board.title}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="textareaContent">본문</label>
+                <textarea class="form-control" type="text"
+                          id="textareaContent"
+                          rows="10"
+                          th:text="${board.content}"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="inputWriter">작성자</label>
+                <input class="form-control" type="text" id="inputWriter" th:value="${board.writer.nickName}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="inputCreated">작성일시</label>
+                <input class="form-control" type="text" id="inputCreated" th:value="${board.createdAt}">
+            </div>
+            <div th:if="${(session.loggedInUser != null) && (session.loggedInUser.id == board.writer.id)}"  >
+                <button class="btn btn-outline-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#removeModal"
+                >삭제</button>
+                <a th:href="@{/board/edit(id=${board.id})}"
+                   class="btn btn-outline-secondary">수정</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-none">
+    <form id="removeForm" th:action="@{/board/remove}" method="post">
+        <input type="text" name="id" th:value="${board.id}">
+    </form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    삭제 확인
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                삭제 하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" form="removeForm">
+                    삭제
+                </button>
+                <a th:href="@{/board/edit(id=${board.id})}"
+                   class="btn btn-secondary" >
+                    취소
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{layout/main::commonScript}"></th:block>
+</body>
+</html>

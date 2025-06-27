@@ -20,12 +20,12 @@
                         <th>제목</th>
                         <th>시작일</th>
                         <th>종료일</th>
-                        <th>작성자</th>
+<!--                        <th>작성자</th>-->
                         <th>작성일시</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="board : ${boardList}">
+                    <tr th:each="board : ${todoList}">
                         <td th:text="${board.id}"></td>
                         <td>
                             <a th:href="@{/board/view(id=${board.id})}" th:text="${board.todoTitle}"></a>
@@ -34,7 +34,7 @@
                         <td th:text="${board.startedDt}"></td>
                         <td th:text="${board.finishedDt}"></td>
                         <td th:text="${board.createdDt}"></td>
-                        <td th:text="${board.updatedDt}"></td>
+<!--                        <td th:text="${board.updatedDt}"></td>-->
                     </tr>
                     </tbody>
                 </table>
