@@ -57,7 +57,6 @@ public class BoardService {
     }
 
     public void add(TodoFrom data, MemberDto user) {
-        Todolist
         Todolist todolist = new Todolist();
         todolist.setTodoTitle(data.getTodoTitle());
         todolist.setTodoContent(data.getTodoContent());
